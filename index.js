@@ -33,6 +33,13 @@ client.on("interactionCreate", (interaction) => {
 
 client.on("ready", () => {
   console.log(`${client.user.username} ready!`);
+  process.send('ready');
+});
+
+process.on("SIGINT", () => {
+  client.destroy(() => {
+    process.exit(0);
+  });
 });
 
 client.login(config.token);
