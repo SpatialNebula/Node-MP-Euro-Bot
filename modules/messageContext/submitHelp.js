@@ -71,7 +71,7 @@ module.exports = {
         return interaction.reply("Invalid Channel");
     }
 
-    const roblox_name = await getUsername(interaction.targetMessage.author.id).catch((err) => {
+    const roblox_name = await getUsername(interaction.user.id).catch((err) => {
       console.error(err);
       return interaction.reply({ ephemeral: true, content: err.message });
     });
