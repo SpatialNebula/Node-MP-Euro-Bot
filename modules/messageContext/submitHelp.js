@@ -47,7 +47,7 @@ module.exports = {
    * @param {discord.MessageContextMenuCommandInteraction} interaction
    */
   execute: async (interaction) => {
-    if(!interaction.targetMessage.member.roles.cache.has('1268615240526991451')) return interaction.reply({content: "Not Allowed", ephemeral: true})
+    if(!interaction.member.roles.cache.has('1268615240526991451')) return interaction.reply({content: "Not Allowed", ephemeral: true})
 
     const channelId = interaction.targetMessage.channelId;
     const guildId = interaction.targetMessage.guildId;

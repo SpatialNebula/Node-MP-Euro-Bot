@@ -14,7 +14,7 @@ for (let i = 0; i < messageContext.length; i++) {
 }
 
 const client = new discord.Client({
-  intents: [],
+  intents: [discord.GatewayIntentBits.Guilds],
 });
 
 client.on("interactionCreate", (interaction) => {
@@ -33,7 +33,7 @@ client.on("interactionCreate", (interaction) => {
 
 client.on("ready", () => {
   console.log(`${client.user.username} ready!`);
-  process.send('ready');
+  if(process?.send) process.send('ready');
 });
 
 process.on("SIGINT", () => {
