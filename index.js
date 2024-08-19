@@ -36,6 +36,10 @@ client.on("ready", () => {
   if(process?.send) process.send('ready');
 });
 
+client.on("disconnect", () => {
+  process.exit(5);
+});
+
 process.on("SIGINT", () => {
   client.destroy(() => {
     process.exit(0);
