@@ -64,6 +64,9 @@ module.exports = {
       case "472469338360905738":
         submissionType = "Help-chat";
         break;
+      case "1178541268381478912":
+        submissionType = "Tyro-help";
+        break;
       case "850017090877521940":
         submissionType = "PHR";
         break;
