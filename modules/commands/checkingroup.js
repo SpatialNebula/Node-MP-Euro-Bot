@@ -49,12 +49,12 @@ module.exports = {
         const  E = await interaction.guild.roles.fetch("478622591461097474")
         const SE = await interaction.guild.roles.fetch("478622810873266176")
         const  M = await interaction.guild.roles.fetch("467300782086029312")
-        const guildMembers = mapMembers(EN)//.concat(mapMembers(PC)).concat(mapMembers(SC)).concat(mapMembers(E)).concat(mapMembers(SE)).concat(mapMembers(M))
+        const guildMembers = mapMembers(EN).concat(mapMembers(PC)).concat(mapMembers(SC)).concat(mapMembers(E)).concat(mapMembers(SE)).concat(mapMembers(M))
 
         let notInGroup = [];
         let inGroup = [];
 
-        interaction.reply({ephemeral: false, content: `Checking 0/${guildMembers.length} discord users. May take approximately ${Math.ceil((0.5*guildMembers.length)/60)} minutes total.`})
+        interaction.reply({ephemeral: true, content: `Checking 0/${guildMembers.length} discord users. May take approximately ${Math.ceil((0.5*guildMembers.length)/60)} minutes total.`})
 
         for(i in guildMembers){
             await sleep(500)
@@ -86,13 +86,13 @@ module.exports = {
             if (filteredGroups.length < 1) {current += "false"; notInGroup.push(current)} else {current += "true", inGroup.push(rowifi_data.roblox_id)};
             console.log(current)
 
-            interaction.editReply({ephemeral: false, content: `Checking ${i+1}/${guildMembers.length} discord users. May take approximately ${Math.ceil((0.5*guildMembers.length)/60)} minutes total.\n\nFlagged not in group: <@${notInGroup.join(">, <@")}>`})
+            interaction.editReply({ephemeral: true, content: `Checking ${(parseInt(i)+1)}/${guildMembers.length} discord users. May take approximately ${Math.ceil((0.5*guildMembers.length)/60)} minutes total.\n\nFlagged not in group: <@${notInGroup.join(">, <@")}>`})
         }
 
-        interaction.editReply({ephemeral: false, content: `Fetching all roblox members...\n\nFlagged not in group: <@${notInGroup.join("> <@")}>`})
+        interaction.editReply({ephemeral: true, content: `Fetching all roblox members...\n\nFlagged not in group: <@${notInGroup.join("> <@")}>`})
         let robloxMembers = await getRobloxMembers();
-        interaction.editReply({ephemeral: false, content: `Filtering roblox members...\n\nFlagged not in group: <@${notInGroup.join("> <@")}>`})
+        interaction.editReply({ephemeral: true, content: `Filtering roblox members...\n\nFlagged not in group: <@${notInGroup.join("> <@")}>`})
         let notInDiscord = robloxMembers.filter(member => !inGroup.includes(member.userId)).map(member => member.username)
-        interaction.editReply({ephemeral: false, content: `Fetching all roblox members...\n\nFlagged not in group: <@${notInGroup.join("> <@")}>\n\nFlagged not in discord: \`${notInDiscord.join("`, `")}\``})
+        interaction.editReply({ephemeral: true, content: `Fetching all roblox members...\n\nFlagged not in group: <@${notInGroup.join("> <@")}>\n\nFlagged not in discord: \`${notInDiscord.join("`, `")}\``})
     }
 }
