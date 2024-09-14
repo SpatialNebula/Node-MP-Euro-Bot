@@ -93,7 +93,7 @@ module.exports = {
 
         for(i in guildMembers){
             if(guildMembers[i] == "411916947773587456") continue
-            checkMember[i]
+            await checkMember[i]
         }
 
         interaction.editReply({ephemeral: false, content: `Fetching all roblox members...\n\nFlagged not in group: <@${userIdsNotInGroup.join(">, <@")}>`})
