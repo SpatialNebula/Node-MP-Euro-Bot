@@ -17,7 +17,7 @@ async function getUsername(discordid) {
 
   if (!rowifi_response.ok) {
     throw new Error(
-      `Rowifi Error: \`${rowifi_response.statusText}\` (Are you verified?)`
+      `Rowifi Error: \`${rowifi_response.statusText}\` (Rowifi is down or you are unverified...)`
     );
   }
 
@@ -71,7 +71,7 @@ module.exports = {
         submissionType = "PHR";
         break;
       default:
-        return interaction.reply("Invalid Channel");
+        return interaction.reply({ephemeral: true, content: "Invalid Channel"});
     }
 
     const roblox_name = await getUsername(interaction.user.id).catch((err) => {
