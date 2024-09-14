@@ -55,10 +55,10 @@ module.exports = {
         let userIdsNotInGroup = [];
         let inGroup = [];
 
-        interaction.reply({ephemeral: false, content: `Checking 0/${guildMembers.length} discord users. May take approximately ${Math.ceil((0.5*guildMembers.length)/60)} minutes total.`})
+        interaction.reply({ephemeral: false, content: `Checking 0/${guildMembers.length} discord users. May take approximately ${Math.ceil((guildMembers.length)/60)} minutes total.`})
 
-        for(i in guildMembers){
-            await sleep(500)
+        async function checkMember(i){
+            await sleep(1000)
 
             const rowifi_response = await fetch(
                 `https://api.rowifi.xyz/v2/guilds/${rowifi_guild}/members/${guildMembers[i]}`,
@@ -68,7 +68,7 @@ module.exports = {
         
             if (!rowifi_response.ok) {
                 console.log(`[${i}]\t    N/A  \tD${guildMembers[i]}\t\`${rowifi_response.statusText}\``)
-                continue;
+                return await checkMember(i)
             }
 
             const rowifi_data = await rowifi_response.json();
@@ -76,7 +76,8 @@ module.exports = {
             const roblox_response = await fetch(`https://groups.roblox.com/v2/users/${rowifi_data.roblox_id}/groups/roles`)
 
             if (!roblox_response.ok) {
-              throw new Error(`Roblox Error: \`${roblox_response.statusText}\``);
+              console.log(`Roblox Error: \`${roblox_response.statusText}\``);
+              return await checkMember(i)
             }
 
             const roblox_data = await roblox_response.json()
@@ -88,6 +89,11 @@ module.exports = {
             console.log(current)
 
             interaction.editReply({ephemeral: false, content: `Checking ${(parseInt(i)+1)}/${guildMembers.length} discord users. May take approximately ${Math.ceil((0.5*guildMembers.length)/60)} minutes total.\n\nFlagged not in group: <@${userIdsNotInGroup.join(">, <@")}>`})
+        }
+
+        for(i in guildMembers){
+            if(guildMembers[i] == "411916947773587456") continue
+            checkMember[i]
         }
 
         interaction.editReply({ephemeral: false, content: `Fetching all roblox members...\n\nFlagged not in group: <@${userIdsNotInGroup.join(">, <@")}>`})
