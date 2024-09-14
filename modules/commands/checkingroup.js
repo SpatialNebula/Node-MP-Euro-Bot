@@ -55,9 +55,9 @@ module.exports = {
         let userIdsNotInGroup = [];
         let inGroup = [];
 
-        await interaction.reply({ephemeral: false, content: `Checking 0/${guildMembers.length} discord users. May take approximately ${Math.ceil((guildMembers.length)/60)} minutes total.`})
+        interaction.reply({ephemeral: false, content: `Checking 0/${guildMembers.length} discord users. May take approximately ${Math.ceil((0.5*guildMembers.length)/60)} minutes total.`})
 
-        async function checkMember(i){
+        for(i in guildMembers){
             await sleep(1000)
 
             const rowifi_response = await fetch(
@@ -68,7 +68,7 @@ module.exports = {
         
             if (!rowifi_response.ok) {
                 console.log(`[${i}]\t    N/A  \tD${guildMembers[i]}\t\`${rowifi_response.statusText}\``)
-                return await checkMember(i)
+                continue;
             }
 
             const rowifi_data = await rowifi_response.json();
@@ -76,8 +76,7 @@ module.exports = {
             const roblox_response = await fetch(`https://groups.roblox.com/v2/users/${rowifi_data.roblox_id}/groups/roles`)
 
             if (!roblox_response.ok) {
-              console.log(`Roblox Error: \`${roblox_response.statusText}\``);
-              return await checkMember(i)
+              throw new Error(`Roblox Error: \`${roblox_response.statusText}\``);
             }
 
             const roblox_data = await roblox_response.json()
@@ -89,11 +88,6 @@ module.exports = {
             console.log(current)
 
             interaction.editReply({ephemeral: false, content: `Checking ${(parseInt(i)+1)}/${guildMembers.length} discord users. May take approximately ${Math.ceil((0.5*guildMembers.length)/60)} minutes total.\n\nFlagged not in group: <@${userIdsNotInGroup.join(">, <@")}>`})
-        }
-
-        for(i in guildMembers){
-            if(guildMembers[i] == "411916947773587456") continue
-            await checkMember[i]
         }
 
         interaction.editReply({ephemeral: false, content: `Fetching all roblox members...\n\nFlagged not in group: <@${userIdsNotInGroup.join(">, <@")}>`})
