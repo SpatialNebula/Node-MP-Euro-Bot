@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const discord = require("discord.js")
 const messageContext = fs.readdirSync("./modules/messageContext");
+const commandDir = fs.readdirSync("./modules/commands");
 
 const {clientId, token} = require("./modules/config.json")
 
@@ -11,6 +12,14 @@ for(let i = 0; i < messageContext.length; i++){
     if(!contextItem.endsWith(".js")) continue;
 
     const command = require(`./modules/messageContext/${contextItem}`);
+    commands.push(command.data.toJSON())
+}
+
+for(let i = 0; i < commandDir.length; i++){
+    const commandFile = commandDir[i];
+    if(!commandFile.endsWith(".js")) continue;
+
+    const command = require(`./modules/commands/${commandFile}`);
     commands.push(command.data.toJSON())
 }
 
