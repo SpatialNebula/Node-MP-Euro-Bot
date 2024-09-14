@@ -55,7 +55,7 @@ module.exports = {
         let userIdsNotInGroup = [];
         let inGroup = [];
 
-        interaction.reply({ephemeral: false, content: `Checking 0/${guildMembers.length} discord users. May take approximately ${Math.ceil((guildMembers.length)/60)} minutes total.`})
+        await interaction.reply({ephemeral: false, content: `Checking 0/${guildMembers.length} discord users. May take approximately ${Math.ceil((guildMembers.length)/60)} minutes total.`})
 
         async function checkMember(i){
             await sleep(1000)
