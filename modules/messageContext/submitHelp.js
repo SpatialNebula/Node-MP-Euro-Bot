@@ -18,7 +18,7 @@ async function getUsername(discordid) {
   if (!rowifi_response.ok) {
     console.log(rowifi_response)
     throw new Error(
-      `Rowifi Error: \`${rowifi_response.statusText}\` (Rowifi is down or you are unverified...)`
+      `Rowifi Error ${rowifi_response.status}: \`${rowifi_response.statusText}\` (Rowifi is down or you are unverified...)`
     );
   }
 
@@ -34,7 +34,7 @@ async function getUsername(discordid) {
 
   if (!roblox_response.ok) {
     console.log(roblox_response)
-    throw new Error(`Roblox Error: \`${roblox_response.statusText}\``);
+    throw new Error(`Roblox Error ${roblox_response.status}: \`${roblox_response.statusText}\``);
   }
 
   return (await roblox_response.json()).name;
