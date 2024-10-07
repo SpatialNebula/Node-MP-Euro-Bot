@@ -42,7 +42,7 @@ async function getUsername(discordid) {
 
 module.exports = {
   data: new discord.ContextMenuCommandBuilder()
-    .setName("Submit Euros")
+    .setName("Submit Coins")
     .setType(discord.ApplicationCommandType.Message),
   /**
    *
