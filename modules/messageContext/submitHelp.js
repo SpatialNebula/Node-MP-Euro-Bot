@@ -2,7 +2,9 @@ const discord = require("discord.js");
 
 const { rowifi_token, rowifi_guild } = require("./../config.json");
 
-async function getUsername(discordid) {
+async function getUsername(discordid, logger) {
+
+  logger.debug(`Fetching ${discordid}'s username`)
 
   // ##############
   // ### ROWIFI ###
@@ -15,8 +17,9 @@ async function getUsername(discordid) {
     }
   );
 
+  logger.debug(rowifi_response)
+
   if (!rowifi_response.ok) {
-    console.log(rowifi_response)
     throw new Error(
       `Rowifi Error ${rowifi_response.status}: \`${rowifi_response.statusText}\` (Rowifi is down or you are unverified...)`
     );
@@ -32,12 +35,17 @@ async function getUsername(discordid) {
     `https://users.roblox.com/v1/users/${rowifi_data.roblox_id}`
   );
 
+  logger.debug(roblox_response)
+
   if (!roblox_response.ok) {
-    console.log(roblox_response)
     throw new Error(`Roblox Error ${roblox_response.status}: \`${roblox_response.statusText}\``);
   }
 
-  return (await roblox_response.json()).name;
+  const roblox_name = (await roblox_response.json()).name
+
+  logger.debug(`${discordid}'s username is '${roblox_name}'`)
+
+  return roblox_name;
 }
 
 module.exports = {
@@ -48,7 +56,7 @@ module.exports = {
    *
    * @param {discord.MessageContextMenuCommandInteraction} interaction
    */
-  execute: async (interaction) => {
+  execute: async (interaction, logger) => {
     if(!interaction.member.roles.cache.has('796794784341033041')) return interaction.reply({content: "Not Allowed", ephemeral: true})
 
     const channelId = interaction.targetMessage.channelId;
@@ -76,8 +84,8 @@ module.exports = {
         return interaction.reply({ephemeral: true, content: "Invalid Channel"});
     }
 
-    const roblox_name = await getUsername(interaction.user.id).catch((err) => {
-      console.error(err);
+    const roblox_name = await getUsername(interaction.user.id, logger).catch((err) => {
+      logger.error(err);
       return interaction.reply({ ephemeral: true, content: err.message });
     });
 
