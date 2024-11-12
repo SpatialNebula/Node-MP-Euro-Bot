@@ -1,10 +1,21 @@
 const fs = require("node:fs");
 const discord = require("discord.js");
+const winston = require("winston");
 
 const config = require("./modules/config.json");
 const messageContext = fs.readdirSync("./modules/messageContext");
 const commandDir = fs.readdirSync("./modules/commands");
 const commands = {};
+
+// Logging
+const logger = winston.createLogger({
+  level: 'debug',
+  transports: [
+    new winston.transports.File({filename: "server.log", format: winston.format.json()}),
+    new winston.transports.Console({format: winston.format.combine(winston.format.simple(), winston.format.colorize())})
+  ]
+});
+
 // Context Saving
 for (let i = 0; i < messageContext.length; i++) {
   const contextItem = messageContext[i];
@@ -31,24 +42,27 @@ const client = new discord.Client({
 // Interaction Handling
 client.on("interactionCreate", (interaction) => {
   if (interaction.isMessageContextMenuCommand) {
+    logger.info(`${interaction.commandName} executed by '${interaction.user.username}' (${interaction.user.id})`)
+
     if (!commands[interaction.commandName])
       return interaction.reply({ content: "Unknown Command", ephemeral: true });
 
     try {
-      commands[interaction.commandName](interaction);
+      commands[interaction.commandName](interaction, logger);
     } catch (err) {
       interaction.reply({ content: err, ephemeral: true });
-      console.warn(err);
+      logger.error(err);
     }
   }
 });
 // Connected
 client.on("ready", () => {
-  console.log(`${client.user.username} ready!`);
+  logger.info(`${client.user.username} ready!`);
   if(process?.send) process.send('ready');
 });
 // Connection Lost
 client.on("disconnect", () => {
+  logger.error("Client disconnected, exiting...");
   process.exit(5);
 });
 // Process Interrupted
