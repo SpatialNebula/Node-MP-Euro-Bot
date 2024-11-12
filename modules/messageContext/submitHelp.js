@@ -56,7 +56,7 @@ module.exports = {
    *
    * @param {discord.MessageContextMenuCommandInteraction} interaction
    */
-  execute: async (interaction) => {
+  execute: async (interaction, logger) => {
     if(
       !interaction.member.roles.cache.has('796794784341033041') &&  // EU
       !interaction.member.roles.cache.has('429707800197726229') &&  // I

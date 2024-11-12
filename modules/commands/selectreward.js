@@ -32,12 +32,19 @@ module.exports = {
     * @param {discord.CommandInteraction} interaction
     */
     execute: async (interaction) => {
-        if (interaction.user.id != "228875454600183808") return interaction.reply({content: "Not Ready", ephemeral: true});
+        if(
+            !interaction.member.roles.cache.has('796794784341033041') &&  // EU
+            !interaction.member.roles.cache.has('429707800197726229') &&  // I
+            !interaction.member.roles.cache.has('422237888361791488') &&  // SI
+            !interaction.member.roles.cache.has('761067836201500685') &&  // CSI
+            !interaction.member.roles.cache.has('419709328069754880') &&  // DC
+            !interaction.member.roles.cache.has('714317612246630440')     // C
+        ) return interaction.reply({content: "Not Allowed", ephemeral: true})
 
         const choice = interaction.options.getString("reward");
         const name = choices.find(o => o.value == choice).name
 
-        interaction.client.channels.cache.get('861576451773956109').send(`<@&1283556897349173320>, <@${interaction.user.id}> requested '${name}'`);
+        interaction.client.channels.cache.get('1283557589686161449').send(`<@&1283556897349173320>, <@${interaction.user.id}> requested '${name}'`);
         interaction.reply({content: "Done", ephemeral: true});;
     }
 }

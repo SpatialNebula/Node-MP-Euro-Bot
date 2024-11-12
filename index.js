@@ -45,7 +45,7 @@ client.on("interactionCreate", (interaction) => {
     logger.info(`${interaction.commandName} executed by '${interaction.user.username}' (${interaction.user.id})`)
 
     if (!commands[interaction.commandName])
-      return interaction.reply({ content: "Unknown Command", ephemeral: true });
+      return interaction.reply({ content: "Unknown Command, try restarting discord", ephemeral: true });
 
     try {
       commands[interaction.commandName](interaction, logger);
