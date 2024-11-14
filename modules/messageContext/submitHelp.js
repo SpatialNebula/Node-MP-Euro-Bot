@@ -17,7 +17,7 @@ async function getUsername(discordid, logger) {
     }
   );
 
-  logger.debug(rowifi_response)
+  logger.debug(`RoWifi ${rowifi_response.status}: ${rowifi_response.body}`)
 
   if (!rowifi_response.ok) {
     throw new Error(
@@ -35,7 +35,7 @@ async function getUsername(discordid, logger) {
     `https://users.roblox.com/v1/users/${rowifi_data.roblox_id}`
   );
 
-  logger.debug(roblox_response)
+  logger.debug(`Roblox ${roblox_response.status}: ${roblox_response.body}`)
 
   if (!roblox_response.ok) {
     throw new Error(`Roblox Error ${roblox_response.status}: \`${roblox_response.statusText}\``);
@@ -63,31 +63,44 @@ module.exports = {
       !interaction.member.roles.cache.has('422237888361791488') &&  // SI
       !interaction.member.roles.cache.has('761067836201500685') &&  // CSI
       !interaction.member.roles.cache.has('419709328069754880') &&  // DC
-      !interaction.member.roles.cache.has('714317612246630440')     // C
+      !interaction.member.roles.cache.has('714317612246630440') &&  // C
+      !interaction.user.id == "228875454600183808"                  // Nebula
     ) return interaction.reply({content: "Not Allowed", ephemeral: true})
 
     const channelId = interaction.targetMessage.channelId;
     const guildId = interaction.targetMessage.guildId;
     const messageId = interaction.targetMessage.id;
+    const channelName = interaction.targetMessage.channel.name;
+    let proof = "N/A"
 
     let submissionType;
     switch (channelId) {
       case "1268612820082098282":
         submissionType = "Guest-help";
+        proof = `https://discord.com/channels/${guildId}/${channelId}/${messageId}`
         break;
       case "862887007259459607":
         submissionType = "Guest-help";
+        proof = `https://discord.com/channels/${guildId}/${channelId}/${messageId}`
         break;
       case "472469338360905738":
         submissionType = "Help-chat";
+        proof = `https://discord.com/channels/${guildId}/${channelId}/${messageId}`
         break;
       case "1178541268381478912":
         submissionType = "Tyro-help";
+        proof = `https://discord.com/channels/${guildId}/${channelId}/${messageId}`
         break;
       case "850017090877521940":
         submissionType = "PHR";
+        proof = `https://discord.com/channels/${guildId}/${channelId}/${messageId}`
         break;
       default:
+        if(channelName.startsWith("ticket-")) {
+          submissionType = "Ticket";
+          proof = channelName
+          break;
+        }
         return interaction.reply({ephemeral: true, content: "Invalid Channel"});
     }
 
@@ -103,7 +116,7 @@ module.exports = {
         headers: new Headers([
           ["Content-Type", "application/x-www-form-urlencoded"],
         ]),
-        body: `entry.1063261469=${roblox_name}&entry.537377005=https://discord.com/channels/${guildId}/${channelId}/${messageId}&entry.780508841=${submissionType}`,
+        body: `entry.1063261469=${roblox_name}&entry.537377005=${proof}&entry.780508841=${submissionType}`,
       }
     );
 
