@@ -1,7 +1,5 @@
 # Usage Guide
 
-- Permissions are hard coded.
-
 ## Install Dependencies
 ```
 npm install
@@ -24,7 +22,8 @@ npm start
     "token": "...",
     "clientId": "...",
     "rowifi_token": "...",
-    "rowifi_guild": "..."
+    "rowifi_guild": "...",
+    "allowed_roles": ["...", "..."]
 }
 ```
 
