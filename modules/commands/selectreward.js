@@ -1,5 +1,7 @@
 const discord = require("discord.js");
 
+const { allowed_roles } = require("./../config.json");
+
 const choices = [
     {name: "2 Week Quota Exemption (125p)", value: "exempt_2w"},
     {name: "1 Week Quota Exemption (75p)", value: "exempt_1w"},
@@ -32,14 +34,13 @@ module.exports = {
     * @param {discord.CommandInteraction} interaction
     */
     execute: async (interaction) => {
-        if(
-            !interaction.member.roles.cache.has('796794784341033041') &&  // EU
-            !interaction.member.roles.cache.has('429707800197726229') &&  // I
-            !interaction.member.roles.cache.has('422237888361791488') &&  // SI
-            !interaction.member.roles.cache.has('761067836201500685') &&  // CSI
-            !interaction.member.roles.cache.has('419709328069754880') &&  // DC
-            !interaction.member.roles.cache.has('714317612246630440')     // C
-        ) return interaction.reply({content: "Not Allowed", ephemeral: true})
+        let permitted = false;
+        for (role of allowed_roles) {
+          if (!interaction.member.roles.cache.has(role)) continue;
+          permitted = true;
+          break;
+        }
+        if(!permitted) return(interaction.reply({content: "Not Allowed", ephemeral: true}))
 
         const choice = interaction.options.getString("reward");
         const name = choices.find(o => o.value == choice).name
