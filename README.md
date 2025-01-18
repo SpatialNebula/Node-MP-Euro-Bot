@@ -17,7 +17,7 @@ npm run register
 npm start
 ```
 
-## Start with [PM2](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
+## Start with [PM2](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/) for startup at boot
 ```
 pm2 start ecosystem.config.js
 ```
