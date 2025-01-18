@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "register": "node registercommands.js",
+    "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "spatialnebula",
+  "license": "GPL-3.0-only",
   "description": "",
   "dependencies": {
     "discord.js": "^14.15.3",
