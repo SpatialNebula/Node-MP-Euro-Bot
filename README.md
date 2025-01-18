@@ -17,11 +17,6 @@ npm run register
 npm start
 ```
 
-## Start with [PM2](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/) for startup at boot
-```
-pm2 start ecosystem.config.js
-```
-
 ## Configuration
 `./modules/config.json`
 ```json
@@ -31,4 +26,21 @@ pm2 start ecosystem.config.js
     "rowifi_token": "...",
     "rowifi_guild": "..."
 }
+```
+
+# Usage with [PM2](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
+
+## Setup PM2 to run at startup
+```
+pm2 startup
+```
+
+## First Start
+```
+pm2 start ecosystem.config.js
+```
+
+## Save running processes for startup
+```
+pm2 save
 ```
