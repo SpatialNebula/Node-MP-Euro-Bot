@@ -15,13 +15,15 @@ const logger = winston.createLogger({
   ]
 });
 
+// Configuration Validation
 if (!fs.existsSync("./modules/config.json")) {
   logger.error("file './modules/config.json' does not exist!");
   process.exit(1);
 }
 
 const config = require("./modules/config.json");
-for (validator of ["token", "rowifi_token", "rowifi_guild"]) {
+
+for (validator of ["token", "rowifi_token", "rowifi_guild", "allowed_roles"]) {
   if (config[validator]) continue;
   logger.error(`'./modules/config.json' has no '${validator}'!`)
   process.exit(1);

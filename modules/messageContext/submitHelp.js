@@ -1,6 +1,6 @@
 const discord = require("discord.js");
 
-const { rowifi_token, rowifi_guild } = require("./../config.json");
+const { rowifi_token, rowifi_guild, allowed_roles } = require("./../config.json");
 
 async function getUsername(discordid, logger) {
 
@@ -57,14 +57,13 @@ module.exports = {
    * @param {discord.MessageContextMenuCommandInteraction} interaction
    */
   execute: async (interaction, logger) => {
-    if(
-      !interaction.member.roles.cache.has('429707800197726229') &&  // I
-      !interaction.member.roles.cache.has('422237888361791488') &&  // SI
-      !interaction.member.roles.cache.has('761067836201500685') &&  // CSI
-      !interaction.member.roles.cache.has('419709328069754880') &&  // DC
-      !interaction.member.roles.cache.has('714317612246630440') &&  // C
-      !interaction.user.id == "228875454600183808"                  // Nebula
-    ) return interaction.reply({content: "Not Allowed", ephemeral: true})
+    let permitted = false;
+    for (role of allowed_roles) {
+      if (!interaction.member.roles.cache.has(role)) continue;
+      permitted = true;
+      break;
+    }
+    if(!permitted) return(interaction.reply({content: "Not Allowed", ephemeral: true}))
 
     const channelId = interaction.targetMessage.channelId;
     const guildId = interaction.targetMessage.guildId;
