@@ -50,7 +50,7 @@ async function getUsername(discordid, logger) {
 
 module.exports = {
   data: new discord.ContextMenuCommandBuilder()
-    .setName("Submit Coins")
+    .setName("Submit Points")
     .setType(discord.ApplicationCommandType.Message),
   /**
    *
@@ -58,7 +58,6 @@ module.exports = {
    */
   execute: async (interaction, logger) => {
     if(
-      !interaction.member.roles.cache.has('796794784341033041') &&  // EU
       !interaction.member.roles.cache.has('429707800197726229') &&  // I
       !interaction.member.roles.cache.has('422237888361791488') &&  // SI
       !interaction.member.roles.cache.has('761067836201500685') &&  // CSI
