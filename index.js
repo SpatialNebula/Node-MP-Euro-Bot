@@ -2,7 +2,6 @@ const fs = require("node:fs");
 const discord = require("discord.js");
 const winston = require("winston");
 
-const config = require("./modules/config.json");
 const messageContext = fs.readdirSync("./modules/messageContext");
 const commandDir = fs.readdirSync("./modules/commands");
 const commands = {};
@@ -15,6 +14,18 @@ const logger = winston.createLogger({
     new winston.transports.Console({format: winston.format.combine(winston.format.simple(), winston.format.colorize())})
   ]
 });
+
+if (!fs.existsSync("./modules/config.json")) {
+  logger.error("file './modules/config.json' does not exist!");
+  process.exit(1);
+}
+
+const config = require("./modules/config.json");
+for (validator of ["token", "rowifi_token", "rowifi_guild"]) {
+  if (config[validator]) continue;
+  logger.error(`'./modules/config.json' has no '${validator}'!`)
+  process.exit(1);
+}
 
 // Context Saving
 for (let i = 0; i < messageContext.length; i++) {
