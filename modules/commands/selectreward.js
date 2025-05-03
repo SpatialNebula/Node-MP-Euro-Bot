@@ -13,6 +13,7 @@ const choices = [
     {name: "10 MP honor (20p)", value: "10_honor"},
     {name: "20 MP honor (35p)", value: "20_honor"},
     {name: "100 MP honor (150p)", value: "100_honor"},
+    {name: "Premier Praesentia (130p)", value: "premier_praesentia"}
 ]
 
 module.exports = {
