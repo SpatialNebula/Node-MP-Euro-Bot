@@ -3,17 +3,16 @@ const discord = require("discord.js");
 const { allowed_roles } = require("./../config.json");
 
 const choices = [
-    {name: "2 Week Quota Exemption (125p)", value: "exempt_2w"},
-    {name: "1 Week Quota Exemption (75p)", value: "exempt_1w"},
+    {name: "Premier Praesentia medal morph (125p)", value: "premier_praesentia"},
+    {name: "100 Robux (200p)", value: "robux"},
     {name: "Quota Strike Removal (100p)", value: "strike_removal"},
-    {name: "Shoutout in The Taser Tribune (60p)", value: "shoutout"},
-    {name: "Host 1 GN in welfare-events (30p)", value: "gamenight"},
-    {name: "Ping a sectional role in a sectional channel (40p)", value: "sectional_ping"},
-    {name: "Officer greatest medal and role (250p)", value: "oc_greatest_medal_role"},
+    {name: "Custom name (60p)", value: "name"},
+    {name: "Custom prefix (40p)", value: "prefix"},
+    {name: "Officer's greatest medal and role (250p)", value: "oc_greatest_medal_role"},
     {name: "10 MP honor (20p)", value: "10_honor"},
     {name: "20 MP honor (35p)", value: "20_honor"},
     {name: "100 MP honor (150p)", value: "100_honor"},
-    {name: "Premier Praesentia (130p)", value: "premier_praesentia"}
+    {name: "Permanent officer weekly access (300p)", value: "officer_weekly"}
 ]
 
 module.exports = {
