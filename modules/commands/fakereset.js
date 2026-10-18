@@ -1,12 +1,12 @@
 const discord = require("discord.js");
-const CSIDatabase = require("./../google/CSIDatabase.js")
+const CSIDatabase = require("../google/CSIDatabase.js")
 
-const { developer_roles } = require("./../config.json");
+const { developer_roles } = require("../config.json");
 
 module.exports = {
     data: new discord.SlashCommandBuilder()
-        .setName("automationtest")
-        .setDescription("automationtest")
+        .setName("fakereset")
+        .setDescription("face ocdb reset")
         .setDMPermission(false),
 
     /**
@@ -20,13 +20,19 @@ module.exports = {
           permitted = true;
           break;
         }
+        for (role of [1466919839548313756]) {
+          if (!interaction.member.roles.cache.has(role)) continue;
+          permitted = true;
+          break;
+        }
         if(!permitted) return(interaction.reply({content: "Not Allowed", ephemeral: true}));
 
-        interaction.deferReply({ephemeral: false})
+        interaction.deferReply({ephemeral: true})
 
         const csidatabase = new CSIDatabase()
         await csidatabase.initUsers().catch(e => {throw Error("Failed to access the CSI database. No data was modified")})
-        const usersStruck = await csidatabase.applyStrikes().catch(e => {throw Error(`Failed to apply strikes to the CSI database. Some data may have been modified. Error message: \`${e}\``)})
+
+        const usersStruck = await csidatabase.applyStrikes(false).catch(e => {throw Error(`Failed to apply strikes to the CSI database. Some data may have been modified. Error message: \`${e}\``)})
         
         let toptext = ""
         toptext += `## Officer DB Reset\n`
@@ -58,6 +64,6 @@ module.exports = {
             .addSeparatorComponents(new discord.SeparatorBuilder().setDivider(true))
             .addTextDisplayComponents(new discord.TextDisplayBuilder().setContent(bottomtext));
 
-        interaction.followUp({components: [textContainer], flags: [discord.MessageFlags.IsComponentsV2]});
+        interaction.followUp({components: [textContainer], flags: [discord.MessageFlags.Ephemeral, discord.MessageFlags.IsComponentsV2]});
     }
 }

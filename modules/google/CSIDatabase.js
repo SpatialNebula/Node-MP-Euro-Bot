@@ -5,7 +5,7 @@ const Users = require("./../mongodb/Users.js")
 const roblox = require("./../roblox.js")
 
 const SERVICE_ACCOUNT_AUTH_PATH = path.join(__dirname, "./service-account.json")
-const SPREADSHEET_ID = "12cCyzgM-kEhsOHy-DG3tAdwkwv08Fo_XL8gRmA9N7Gs"
+const SPREADSHEET_ID = "1Lw79AhNG8ytiFGlei8ouJwSH7losq2Sw8Wn-oUdNzqI"
 
 function addSevenDays(dateString) {
     const [month, day, year] = dateString.split('/').map(Number);
@@ -274,7 +274,7 @@ class CSIDatabase {
         return message
     }
 
-    async applyStrikes() {
+    async applyStrikes(write) {
         const usersStruck = []
 
         for (let row in this.rawRows) {
@@ -310,8 +310,10 @@ class CSIDatabase {
             replacedRowCD.push([row[2], row[3]])
         }
 
-        await writeRangeData(this.sheets, this.spreadsheetId, `AP Database!C4:D`, replacedRowCD)
-        await writeRangeData(this.sheets, this.spreadsheetId, "Settings!A3:A3", [[addSevenDays(this.CurrentWeek[0][0])]])
+        if (write == true) {
+            await writeRangeData(this.sheets, this.spreadsheetId, `AP Database!C4:D`, replacedRowCD)
+            await writeRangeData(this.sheets, this.spreadsheetId, "Settings!A3:A3", [[addSevenDays(this.CurrentWeek[0][0])]])
+        }
 
         return usersStruck
     }
