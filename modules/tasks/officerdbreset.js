@@ -50,7 +50,7 @@ module.exports = {
             .addComponents(button.data);
 
         await targetChannel.send({
-            content: "`<@&1466919839548313756>`\nThe Officer DB is ready to be reset",
+            content: "<@&1466919839548313756>\nThe Officer DB is ready to be reset",
             components: [actionRow]
         })
 
