@@ -42,7 +42,7 @@ module.exports = {
         
         let toptext = ""
         toptext += `## Officer DB Reset\n`
-        toptext += `The Officer DB has been reset from the week of **${csidatabase.currentWeek}**.`
+        toptext += `<@&1279727030715416682> The Officer DB has been reset from the week of **${csidatabase.currentWeek}**.`
         if (usersStruck.length > 0) toptext += ` The following officers have received a strike:\n`;
 
         usersStruck.sort((a, b) => {a.section.localeCompare(b.section)})
