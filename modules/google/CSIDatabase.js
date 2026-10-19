@@ -225,7 +225,7 @@ class CSIDatabase {
             message += `**#1** - `
             message += userArrToLeaderboardIndex(topAP[0], ":first_place:")
             if (topAP[1].length > 0) message += `**#2** - ${userArrToLeaderboardIndex(topAP[1], ":second_place:")}`
-            if (topAP[2].length > 0) message += `**#3** - ${userArrToLeaderboardIndex(topAP[2], ":third_place:")}\n\n`
+            if (topAP[2].length > 0) message += `**#3** - ${userArrToLeaderboardIndex(topAP[2], ":third_place:")}\n`
         }
 
         if (topReviewers.length == 0) {
