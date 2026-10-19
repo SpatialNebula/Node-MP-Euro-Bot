@@ -38,7 +38,6 @@ module.exports = {
             if(dbEntry == null) dbEntry = new Users({discordId});
             
             if('lastEdited' in dbEntry && Date.now() - parseInt(dbEntry.lastEdited) < 2 * 24 * 60 * 60 * 1000) {
-                console.log(Date.now() - parseInt(dbEntry.lastEdited))
                 continue;
             }
 
@@ -52,8 +51,6 @@ module.exports = {
             } catch(e) {
                 console.log(`Failed to get roblox id for ${discordId}, ${e.toString()}`)
             }
-
-            console.log(dbEntry);
         }
     }
 }
