@@ -51,7 +51,7 @@ async function sendReminderToSection(client, channelId, users, accentColor) {
         const targetThread = await targetChannel.threads.cache.get("1558187782743261224")
         await targetThread.send({ components: [textContainer], flags: [discord.MessageFlags.IsComponentsV2] })
     } else {
-        await targetThread.send({ components: [textContainer], flags: [discord.MessageFlags.IsComponentsV2] })
+        await targetChannel.send({ components: [textContainer], flags: [discord.MessageFlags.IsComponentsV2] })
     }
 
 }
