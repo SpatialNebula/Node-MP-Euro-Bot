@@ -3,7 +3,7 @@ const roblox = require("../roblox.js")
 const Users = require("../mongodb/Users.js")
 
 module.exports = {
-    enabled: false,
+    enabled: true,
 
     /**
      * 
