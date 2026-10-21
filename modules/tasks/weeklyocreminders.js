@@ -66,7 +66,7 @@ module.exports = {
     async execute(client) {
         const {hour: hour_oc, day: day_oc} = getDayAndHour(9) // JST
         const {hour: hour_eu, day: day_eu} = getDayAndHour(1) // CET/BST
-        const {hour: hour_am, day: day_am} = getDayAndHour(-7)// idk
+        const {hour: hour_am, day: day_am} = getDayAndHour(-6)// idk
         
         if (day_oc <= 2) return;
 
