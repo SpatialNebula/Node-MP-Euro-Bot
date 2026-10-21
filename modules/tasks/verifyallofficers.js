@@ -2,19 +2,8 @@ const discord = require("discord.js")
 const roblox = require("../roblox.js")
 const Users = require("../mongodb/Users.js")
 
-async function verifyUser(){
-    const discordId = interaction.options.getMember("target").id ?? interaction.user.id
-    const robloxId = await roblox.getUseridFromDiscordid(discordId)
-    const robloxName = await roblox.getUsernamefromUserid(robloxId)
-
-    const user = await Users.findOneAndUpdate({discordId}, {discordId, robloxId})
-    if (user == null) await Users.create({discordId, robloxId})
-
-    interaction.reply({ content: `Verified <@${discordId}> as ${robloxName} based on RoWiFi`, ephemeral: true })
-}
-
 module.exports = {
-    enabled: true,
+    enabled: false,
 
     /**
      * 
@@ -32,7 +21,7 @@ module.exports = {
 
         const officers = [].concat(Inspectors).concat(Superintendents);
 
-        for (discordId of officers) {
+        for (let discordId of officers) {
             let dbEntry = await Users.findOne({discordId});
             
             if(dbEntry == null) dbEntry = new Users({discordId});

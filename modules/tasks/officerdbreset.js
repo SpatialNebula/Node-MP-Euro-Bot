@@ -22,7 +22,7 @@ function getEasternTime() {
 }
 
 module.exports = {
-    enabled: true,
+    enabled: false,
 
     /**
      * 
