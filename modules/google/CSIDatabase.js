@@ -3,6 +3,7 @@ const path = require("node:path")
 
 const Users = require("./../mongodb/Users.js")
 const roblox = require("./../roblox.js")
+const officersgreatest = require("./officersgreatest.js")
 
 const SERVICE_ACCOUNT_AUTH_PATH = path.join(__dirname, "./service-account.json")
 const SPREADSHEET_ID = "1Lw79AhNG8ytiFGlei8ouJwSH7losq2Sw8Wn-oUdNzqI"
@@ -56,6 +57,7 @@ async function getUsersFromSheetRows(rawSheetRows) {
             rank: columns[1],
             strikes: columns[2],
             strikelog: columns[3],
+            apReq: columns[5],
             apps: columns[18],
             events: columns[17],
             ap: columns[20],
@@ -289,6 +291,27 @@ class CSIDatabase {
 
         message += "\n```";
         return message
+    }
+
+    async applyOfficersGreatest(){
+        for (let user of this.users) {
+            const apReq = parseFloat(user.apReq)
+            const ap = parseFloat(user.ap)
+
+            if (user.status != "Constant" && apReq > 0 && ap >= 3*apReq) {
+                await officersgreatest.submitForm(user.username, `${user.ap} AP, ${this.currentWeek}, CSIDatabase.js`, "Triple-quota")
+            } else if (user.status != "Constant" && apReq > 0 && ap >= 2*apReq) {
+                await officersgreatest.submitForm(user.username, `${user.ap} AP, ${this.currentWeek}, CSIDatabase.js`, "Double-quota")
+            }
+        }
+
+        for (let user of this.topReviewers) {
+            await officersgreatest.submitForm(user.username, `CSIDatabase.js ${user.apps} apps, ${this.currentWeek}`, "Top-reviewer")
+        }
+
+        for (let user of this.topContributors[0]) {
+            await officersgreatest.submitForm(user.username, `CSIDatabase.js ${user.ap} AP, ${this.currentWeek}`, "Top-host")
+        }
     }
 
     async applyStrikes(write) {
