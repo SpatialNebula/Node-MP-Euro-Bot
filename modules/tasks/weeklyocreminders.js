@@ -26,7 +26,7 @@ async function sendReminderToSection(client, channelId, users, accentColor) {
 
     let toptext = ""
     toptext += "## Quota Reminder\n"
-    toptext += "Remember to finish quota or feel free to submit an exemption if needed"
+    toptext += "Remember to finish quota or feel free to submit an exemption if needed. Below are your current stats:"
 
     let bottomtext = ""
     for (let i in users) {
