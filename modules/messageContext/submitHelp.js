@@ -46,11 +46,13 @@ module.exports = {
                 return interaction.reply({ ephemeral: true, content: "Invalid Channel" });
         }
 
+        interaction.deferReply({ephemeral: true})
+
         const roblox_id = await roblox.getUseridFromDiscordid(interaction.user.id)
         const roblox_name = await roblox.getUsernamefromUserid(roblox_id)
         await officersgreatest.submitForm(roblox_name, proof, submissionType)
 
-        interaction.reply({
+        interaction.followUp({
             content: `${submissionType} submitted.`,
             ephemeral: true,
         });
