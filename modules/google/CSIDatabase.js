@@ -57,6 +57,7 @@ async function getUsersFromSheetRows(rawSheetRows) {
             strikes: columns[2],
             strikelog: columns[3],
             apps: columns[18],
+            events: columns[17],
             ap: columns[20],
             status: columns[21],
             section: columns[23],
@@ -212,6 +213,21 @@ class CSIDatabase {
         return { sectionStats, topSections }
     }
 
+    get eventAP() {
+        let counter = 0
+        for (let user of this.users) {
+            counter += Math.floor(user.events);
+        }
+        return counter
+    }
+
+    get apps() {
+        let counter = 0
+        for (let user of this.users) {
+            counter += this.apps
+        }
+    }
+
     get weeklyShout() {
         const topAP = this.topContributors
         const topReviewers = this.topReviewers
@@ -297,6 +313,7 @@ class CSIDatabase {
                     strikes: columns[2],
                     strikelog: columns[3],
                     apps: columns[18],
+                    events: columns[17],
                     ap: columns[20],
                     status: columns[21],
                     section: columns[23],
