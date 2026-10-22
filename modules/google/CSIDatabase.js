@@ -226,6 +226,7 @@ class CSIDatabase {
         for (let user of this.users) {
             counter += parseInt(user.apps)
         }
+        return counter
     }
 
     get weeklyShout() {
