@@ -8,7 +8,7 @@ officersgreatest.submitForm = async (robloxName, proof, submissionType) => {
             headers: new Headers([
                 ["Content-Type", "application/x-www-form-urlencoded"],
             ]),
-            body: `entry.1063261469=${roblox_name}&entry.537377005=${proof}&entry.780508841=${submissionType}`,
+            body: `entry.1063261469=${robloxName}&entry.537377005=${proof}&entry.780508841=${submissionType}`,
         }
     );
 
