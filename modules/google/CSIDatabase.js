@@ -216,7 +216,7 @@ class CSIDatabase {
     get eventAP() {
         let counter = 0
         for (let user of this.users) {
-            counter += Math.floor(user.events);
+            counter += Math.floor(parseInt(user.events));
         }
         return counter
     }
@@ -224,7 +224,7 @@ class CSIDatabase {
     get apps() {
         let counter = 0
         for (let user of this.users) {
-            counter += this.apps
+            counter += parseInt(user.apps)
         }
     }
 
