@@ -33,12 +33,12 @@ async function sendReminderToSection(client, channelId, users, accentColor) {
         let user = users[i]
 
         if ("discordId" in user && user.discordId != null) {
-            bottomtext += `<@${user.discordId}>`
+            bottomtext += `<@${user.discordId}> (events: ${user.events}, total: ${user.ap})`
         } else {
-            bottomtext += `${user.username}`
+            bottomtext += `${user.username} (events: ${user.events}, total: ${user.ap})`
         };
 
-        if (i < users.length - 1) bottomtext += ", ";
+        if (i < users.length - 1) bottomtext += ",\n";
     }
 
     const textContainer = new discord.ContainerBuilder()
