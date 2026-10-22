@@ -62,7 +62,7 @@ async function getUsersFromSheetRows(rawSheetRows) {
             status: columns[21],
             section: columns[23],
             row: parseInt(row) + 4,
-            discordId: dbUser?.discordId
+            discordId: dbUser?.discordId || null
         }
         users.push(user)
     }

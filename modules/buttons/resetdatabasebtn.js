@@ -58,7 +58,21 @@ module.exports = {
                     toptext += `<:${user.section}Crest:608153804353044495>`
                     break;
             }
-            toptext += ` ${user.username} now has ${user.strikes} strikes\n`
+            toptext += ` ${user.username} now has ${user.strikes} strikes`
+
+            const dbuser = csidatabase.users.find(u => u.username == user.username)
+            if(u.discordId != null) {
+                try {
+                    const discordUser = await interaction.client.users.fetch(u.discordId)
+                    discordUser.send({content: `You have been issued a quota strike on the MP OC database. You now have ${u.strikes} strikes. DM your sectional ASI or the officer manager if you have reason to have it revoked.`})
+                } catch (_) {
+                    toptext += " (failed to DM)"
+                }
+            } else {
+                toptext += " (failed to DM)"
+            };
+
+            toptext += "\n"
         };
 
         let bottomtext = ""
