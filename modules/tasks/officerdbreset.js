@@ -36,10 +36,10 @@ module.exports = {
         const [month, day, year] = dateString.split('/').map(Number);
         const date = new Date(year, month - 1, day);
         const date_now = getEasternTime()
-
         const diffInDates = Math.floor((date_now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24))
+	console.log(date, date.getTime(), date_now, date_now.getTime(), diffInDates)
 
-        if (diffInDates < 7) return;
+        if (diffInDates < 7 || diffInDates > 8 || isNaN(diffInDates)) return;
 
         const sentreset = await SentResets.findOne({date: dateString, type: "oc"})
         if (sentreset != null) return;
