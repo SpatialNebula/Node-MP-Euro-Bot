@@ -107,6 +107,7 @@ client.on("disconnect", () => {
 process.on("SIGINT", async () => {
     await mongoose.disconnect().catch(e => logger.error(e))
     await client.destroy().catch(e => logger.error(e))
+    logger.info("Exiting gracefully...")
     process.exit(0)
 });
 // Login
