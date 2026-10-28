@@ -15,15 +15,15 @@ module.exports = {
     */
     execute: async (interaction, logger) => {
         let permitted = false;
-        for (role of developer_roles) {
-          if (!interaction.member.roles.cache.has(role)) continue;
-          permitted = true;
-          break;
+        for (let role of developer_roles) {
+            if (!interaction.member.roles.cache.has(role)) continue;
+            permitted = true;
+            break;
         }
-        for (role of [761067836201500685, 419709328069754880]) {
-          if (!interaction.member.roles.cache.has(role)) continue;
-          permitted = true;
-          break;
+        for (let role of ["761067836201500685", "419709328069754880"]) {
+            if (!interaction.member.roles.cache.has(role)) continue;
+            permitted = true;
+            break;
         }
         if(!permitted) return(interaction.reply({content: "Not Allowed", ephemeral: true}));
 
