@@ -5,7 +5,7 @@ const sentremindersSchema = mongoose.Schema({
     done_eu: Boolean,
     done_am: Boolean,
     done_oc: Boolean,
-    done_sunday: false,
+    done_sunday: Boolean,
 })
 
 const SentReminders = mongoose.model("sentreminders", sentremindersSchema)
