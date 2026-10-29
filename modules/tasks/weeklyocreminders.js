@@ -70,15 +70,21 @@ module.exports = {
         
         if (day_oc <= 2) return;
 
+        console.log("pass1")
+
         const csidatabase = new CSIDatabase()
         await csidatabase.initWeek()
         const quotaWeek = csidatabase.currentWeek
         let sentreminder = await SentReminders.findOne({ date: quotaWeek })
         if (sentreminder == null) sentreminder = await SentReminders.create({ date: quotaWeek, done_eu: false, done_am: false, done_oc: false });
+        console.log(sentreminder)
 
         if ((sentreminder.done_eu == true || day_eu <= 2 || hour_eu <= 7) && (sentreminder.done_am == true || day_am <= 2 || hour_am <= 7) && (sentreminder.done_oc == true || day_oc <= 2 || hour_oc <= 7)) return;
+        console.log("pass2")
 
         await csidatabase.initUsers()
+        if (csidatabase.users.length < 1) return;
+
         const users = csidatabase.users.filter(m => m.status == "Incomplete" || m.status == "In Progress")
         const usersBySection = users.reduce((acc, user) => {
             (acc[user.section] ??= []).push(user);
@@ -87,15 +93,18 @@ module.exports = {
 
 
         if (sentreminder.done_am == false && day_am > 2 && hour_am > 7) {
+            console.log(usersBySection)
             await sendReminderToSection(client, "678576710517784586", usersBySection["American"], 13386021)
             sentreminder.done_am = true
         }
         
         if (sentreminder.done_eu == false && day_eu > 2 && hour_eu > 7) {
+            console.log(usersBySection)
             await sendReminderToSection(client, "678577079402496030", usersBySection["European"], 6989903)
             sentreminder.done_eu = true
         }
         if (sentreminder.done_oc == false && day_oc > 2 && hour_oc > 7) {
+            console.log(usersBySection)
             await sendReminderToSection(client, "678577413428477953", usersBySection["Oceanic"], 7317724)
             sentreminder.done_oc = true
         }
