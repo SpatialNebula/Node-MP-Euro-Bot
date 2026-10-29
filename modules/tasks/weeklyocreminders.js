@@ -20,12 +20,12 @@ function getDayAndHour(offsetHours = 1, date = new Date()) {
     };
 }
 
-async function sendReminderToSection(client, channelId, users, accentColor) {
+async function sendReminderToSection(client, channelId, users, accentColor, title) {
     if (users.length == 0) return;
     const targetChannel = await client.channels.cache.get(channelId)
 
     let toptext = ""
-    toptext += "## Quota Reminder\n"
+    toptext += `## ${title}\n`
     toptext += "Remember to finish quota or feel free to submit an exemption if needed. Below are your current stats:"
 
     let bottomtext = ""
@@ -79,7 +79,7 @@ module.exports = {
         if (sentreminder == null) sentreminder = await SentReminders.create({ date: quotaWeek, done_eu: false, done_am: false, done_oc: false });
         console.log(sentreminder)
 
-        if ((sentreminder.done_eu == true || day_eu <= 2 || hour_eu <= 7) && (sentreminder.done_am == true || day_am <= 2 || hour_am <= 7) && (sentreminder.done_oc == true || day_oc <= 2 || hour_oc <= 7)) return;
+        if ((sentreminder.done_eu == true || day_eu <= 2 || hour_eu <= 7) && (sentreminder.done_am == true || day_am <= 2 || hour_am <= 7) && (sentreminder.done_oc == true || day_oc <= 2 || hour_oc <= 7) && (sentreminder.done_sunday == true || day_am <= 5)) return;
         console.log("pass2")
 
         await csidatabase.initUsers()
@@ -94,19 +94,27 @@ module.exports = {
 
         if (sentreminder.done_am == false && day_am > 2 && hour_am > 7) {
             console.log(usersBySection)
-            await sendReminderToSection(client, "678576710517784586", usersBySection["American"], 13386021)
+            await sendReminderToSection(client, "678576710517784586", usersBySection["American"], 13386021, "Quota Reminder")
             sentreminder.done_am = true
         }
         
         if (sentreminder.done_eu == false && day_eu > 2 && hour_eu > 7) {
             console.log(usersBySection)
-            await sendReminderToSection(client, "678577079402496030", usersBySection["European"], 6989903)
+            await sendReminderToSection(client, "678577079402496030", usersBySection["European"], 6989903, "Quota Reminder")
             sentreminder.done_eu = true
         }
         if (sentreminder.done_oc == false && day_oc > 2 && hour_oc > 7) {
             console.log(usersBySection)
-            await sendReminderToSection(client, "678577413428477953", usersBySection["Oceanic"], 7317724)
+            await sendReminderToSection(client, "678577413428477953", usersBySection["Oceanic"], 7317724, "Quota Reminder")
             sentreminder.done_oc = true
+        }
+
+        if (sentreminder.done_sunday == false && day_am > 5) {
+            console.log(usersBySection)
+            await sendReminderToSection(client, "678577413428477953", usersBySection["Oceanic"], 7317724, "Sunday Reminder")
+            await sendReminderToSection(client, "678577079402496030", usersBySection["European"], 6989903, "Sunday Reminder")
+            await sendReminderToSection(client, "678576710517784586", usersBySection["American"], 13386021, "Sunday Reminder")
+            sentreminder.done_sunday = true
         }
 
         await sentreminder.save()
