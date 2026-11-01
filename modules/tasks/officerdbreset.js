@@ -4,6 +4,7 @@ const CSIDatabase = require("./../google/CSIDatabase.js")
 const SentResets = require("./../mongodb/sentresets.js")
 
 function getEasternTime() {
+    return new new Date(date.getTime() + (-6 * 3600000))
     const now = new Date();
     const estString = now.toLocaleString("en-US", {
         timeZone: "America/New_York",
