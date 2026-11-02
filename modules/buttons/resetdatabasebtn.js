@@ -53,7 +53,7 @@ module.exports = {
         if (usersStruck.length > 0) toptext += ` The following officers have received a strike:\n`;
 
         usersStruck.sort((a, b) => {a.section.localeCompare(b.section)})
-        for (user of usersStruck) {
+        for (let user of usersStruck) {
             switch(user.section){
                 case "European":
                     toptext += `<:${user.section}Crest:677128003649536010>`
@@ -68,10 +68,10 @@ module.exports = {
             toptext += ` ${user.username} now has ${user.strikes} strikes`
 
             const dbuser = csidatabase.users.find(u => u.username == user.username)
-            if(u.discordId != null) {
+            if(dbuser.discordId != null) {
                 try {
-                    const discordUser = await interaction.client.users.fetch(u.discordId)
-                    discordUser.send({content: `You have been issued a quota strike on the MP OC database. You now have ${u.strikes} strikes. DM your sectional ASI or the officer manager if you have reason to have it revoked.`})
+                    const discordUser = await interaction.client.users.fetch(dbuser.discordId)
+                    discordUser.send({content: `You have been issued a quota strike on the MP OC database. You now have ${dbuser.strikes} strikes. DM your sectional ASI or the officer manager if you have reason to have it revoked.`})
                 } catch (_) {
                     toptext += " (failed to DM)"
                 }
