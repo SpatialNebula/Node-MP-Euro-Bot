@@ -30,7 +30,7 @@ module.exports = {
         }
         if(!permitted) return(interaction.reply({content: "Not Allowed", ephemeral: true}));
 
-        const discordId = interaction.options.getMember("target").id ?? interaction.user.id
+        const discordId = interaction.options.getMember("target")?.id ?? interaction.user.id
         const robloxId = await roblox.getUseridFromDiscordid(discordId)
         const robloxName = await roblox.getUsernamefromUserid(robloxId)
 
