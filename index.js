@@ -101,6 +101,44 @@ client.on("disconnect", () => {
     logger.error("Client disconnected, exiting...");
     process.exit(5);
 });
+
+// Fastify Webserver
+const fastify = require("fastify")({logger: true});
+const bearerAuthPlugin = require('@fastify/bearer-auth')
+const keys = new Set(config.fastifyKeys)
+const routes = require("./modules/routes.js")
+fastify.register(bearerAuthPlugin, {keys})
+
+for (let route of routes){
+    try {
+        let fastifyfunction;
+        switch (route.method) {
+            case "GET":
+                fastify.get(route.path, async (request, reply) => {
+                    try {await route.callback(request, reply, client)} catch(e) {logger.warn(`Failed to execute request "${route.path}" from ${request.ip}: ${e}`)}
+                })
+                break;
+            case "POST":
+                fastify.post(route.path, async (request, reply) => {
+                    try {await route.callback(request, reply, client)} catch(e) {logger.warn(`Failed to execute request "${route.path}" from ${request.ip}: ${e}`)}
+                })
+                break;
+        }
+
+        
+    } catch (e) {
+        logger.error(`Failed to register route: "${route.path}". Reason: ${e.toString()}`)
+    }
+}
+
+fastify.listen({ port: 3000 }, function (err, address) {
+    if (err) {
+        fastify.log.error(err)
+        process.exit(1)
+    }
+    logger.info(`Fastify is now listening on ${address}`)
+})
+
 // Process Interrupted
 process.on("SIGINT", async () => {
     await mongoose.disconnect().catch(e => logger.error(e))
