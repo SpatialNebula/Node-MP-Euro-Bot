@@ -63,7 +63,7 @@ for (let i = 0; i < buttonDir.length; i++) {
     if (!commandFile.endsWith(".js")) continue;
 
     const command = require(`./modules/buttons/${commandFile}`);
-    commands[command.data.name] = command.execute;
+    commands[command.data.data.custom_id] = command.execute;
 }
 // Client Creation
 const client = new discord.Client({
@@ -74,23 +74,21 @@ const client = new discord.Client({
 });
 // Interaction Handling
 client.on("interactionCreate", async (interaction) => {
-    if (interaction.isMessageContextMenuCommand) {
-        logger.info(`${interaction.commandName} executed by '${interaction.user.username}' (${interaction.user.id})`)
+    const commandName = interaction.commandName ?? interaction.customId
+    logger.info(`${commandName} executed by '${interaction.user.username}' (${interaction.user.id})`)
+    if (!commands[commandName])
+        return interaction.reply({ content: "Unknown Command, try restarting discord", ephemeral: true });
 
-        if (!commands[interaction.commandName])
-            return interaction.reply({ content: "Unknown Command, try restarting discord", ephemeral: true });
-
-        try {
-            await commands[interaction.commandName](interaction, logger);
-        } catch (err) {
-            if (interaction.deferred || interaction.replied) {
-                interaction.followUp({ content: err.toString(), ephemeral: true });
-            } else {
-                interaction.reply({ content: err.toString(), ephemeral: true });
-            }
-            logger.error(err);
-            console.log(err)
+    try {
+        await commands[commandName](interaction, logger);
+    } catch (err) {
+        if (interaction.deferred || interaction.replied) {
+            interaction.followUp({ content: err.toString(), ephemeral: true });
+        } else {
+            interaction.reply({ content: err.toString(), ephemeral: true });
         }
+        logger.error(err);
+        console.log(err)
     }
 });
 // Connected
