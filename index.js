@@ -25,7 +25,7 @@ if (!fs.existsSync("./modules/config.json")) {
 }
 
 const config = require("./modules/config.json");
-for (validator of ["token", "rowifi_token", "rowifi_guild", "allowed_roles", "mongodb_user", "mongodb_passwd", "mongodb_host", "mongodb_port"]) {
+for (validator of ["token", "rowifi_token", "rowifi_guild", "allowed_roles", "mongodb_user", "mongodb_passwd", "mongodb_host", "mongodb_port", "fastify_port", "fastify_address"]) {
     if (config[validator]) continue;
     logger.error(`'./modules/config.json' has no '${validator}'!`)
     process.exit(1);
@@ -131,7 +131,7 @@ for (let route of routes){
     }
 }
 
-fastify.listen({ port: 3000 }, function (err, address) {
+fastify.listen({ port: config.fastify_port, host: config.fastify_address }, function (err, address) {
     if (err) {
         fastify.log.error(err)
         process.exit(1)
