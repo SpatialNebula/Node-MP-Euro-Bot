@@ -76,7 +76,7 @@ module.exports = {
         await csidatabase.initWeek()
         const quotaWeek = csidatabase.currentWeek
         let sentreminder = await SentReminders.findOne({ date: quotaWeek })
-        if (sentreminder == null) sentreminder = await SentReminders.create({ date: quotaWeek, done_eu: false, done_am: false, done_oc: false });
+        if (sentreminder == null) sentreminder = await SentReminders.create({ date: quotaWeek, done_eu: false, done_am: false, done_oc: false, done_sunday: false });
         console.log(sentreminder)
 
         if ((sentreminder.done_eu == true || day_eu <= 2 || hour_eu <= 7) && (sentreminder.done_am == true || day_am <= 2 || hour_am <= 7) && (sentreminder.done_oc == true || day_oc <= 2 || hour_oc <= 7) && (sentreminder.done_sunday == true || day_am <= 5)) return;
