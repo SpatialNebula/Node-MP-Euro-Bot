@@ -45,7 +45,7 @@ module.exports.push({
             .addComponents(acceptBtn.data, completeBtn.data, rejectBtn.data);
         
         const textContainer = new discord.ContainerBuilder()
-            .addTextDisplayComponents(new discord.TextDisplayBuilder().setContent(`### Uniform Funding Notification\nSomeone has requested uniform funding, <@&1556385054295326850`))
+            .addTextDisplayComponents(new discord.TextDisplayBuilder().setContent(`### Uniform Funding Notification\nSomeone has requested uniform funding, <@&1556385054295326850>`))
             .addSeparatorComponents(new discord.SeparatorBuilder().setDivider(true))
             .addTextDisplayComponents(new discord.TextDisplayBuilder().setContent(`**Username**\nRoblox: ${robloxName}\nDiscord: ${discordName}`))
             .addTextDisplayComponents(new discord.TextDisplayBuilder().setContent(`**Subcategory**\nGroup: ${subcategory}\nRank: ${rank}`))
