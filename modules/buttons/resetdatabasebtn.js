@@ -71,7 +71,7 @@ module.exports = {
             if(dbuser.discordId != null) {
                 try {
                     const discordUser = await interaction.client.users.fetch(dbuser.discordId)
-                    discordUser.send({content: `You have been issued a quota strike on the MP OC database. You now have ${dbuser.strikes} strikes. DM your sectional ASI or the officer manager if you have reason to have it revoked.`})
+                    discordUser.send({content: `You have been issued a quota strike on the MP OC database. You now have ${user.strikes} strikes. DM your sectional ASI or the officer manager if you have reason to have it revoked.`})
                 } catch (_) {
                     toptext += " (failed to DM)"
                 }

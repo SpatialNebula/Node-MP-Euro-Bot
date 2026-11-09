@@ -31,6 +31,7 @@ async function run(){
             console.info(`Task ${task} executed successfully`)
         } catch (e) {
             console.error(`Task ${task} failed with error: ${e.toString()}`)
+            console.error(e)
         }
     }
     await mongoose.disconnect()
