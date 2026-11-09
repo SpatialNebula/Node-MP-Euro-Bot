@@ -145,7 +145,7 @@ class CSIDatabase {
 
         const users = this.users.toSorted((a, b) => { return parseInt(b.apps) - parseInt(a.apps) })
         for (let user in users) {
-            if (users[user].apps == "0") {
+            if (users[user].apps < 20) {
                 break
             } else if (user == 0) {
                 topReviewers.push(users[user])
@@ -298,9 +298,9 @@ class CSIDatabase {
             const apReq = parseFloat(user.apReq)
             const ap = parseFloat(user.ap)
 
-            if (user.status != "Constant" && apReq > 0 && ap >= 3*apReq) {
+            if (user.status != "Constant" && apReq > 0 && ap >= 9) {
                 await officersgreatest.submitForm(user.username, `${user.ap} AP, ${this.currentWeek}, CSIDatabase.js`, "Triple-quota")
-            } else if (user.status != "Constant" && apReq > 0 && ap >= 2*apReq) {
+            } else if (user.status != "Constant" && apReq > 0 && ap >= 6) {
                 await officersgreatest.submitForm(user.username, `${user.ap} AP, ${this.currentWeek}, CSIDatabase.js`, "Double-quota")
             }
         }
