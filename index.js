@@ -103,7 +103,10 @@ client.on("disconnect", () => {
 });
 
 // Fastify Webserver
-const fastify = require("fastify")({logger: true});
+const fastify = require("fastify")({
+    logger: true,
+    trustProxy: ["10.0.60.1/32"]
+});
 const bearerAuthPlugin = require('@fastify/bearer-auth')
 const keys = new Set(config.fastifyKeys)
 const routes = require("./modules/routes.js")
