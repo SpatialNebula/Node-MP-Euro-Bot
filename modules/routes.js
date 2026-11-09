@@ -51,7 +51,7 @@ module.exports.push({
             .addTextDisplayComponents(new discord.TextDisplayBuilder().setContent(`**Subcategory**\nGroup: ${subcategory}\nRank: ${rank}`))
             .addTextDisplayComponents(new discord.TextDisplayBuilder().setContent(`**Uniform(s)**\n${uniforms}`));
 
-        const currentInteraction = await targetThread.send({components: [textContainer, actionRow], flags: [discord.MessageFlags.IsComponentsV2]})
+        const currentInteraction = await targetChannel.send({components: [textContainer, actionRow], flags: [discord.MessageFlags.IsComponentsV2]})
 
         const uniformrequest = await uniReqs.create({
             robloxName, discordName, subcategory, rank, uniforms,
