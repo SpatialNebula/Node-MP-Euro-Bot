@@ -145,7 +145,7 @@ class CSIDatabase {
 
         const users = this.users.toSorted((a, b) => { return parseInt(b.apps) - parseInt(a.apps) })
         for (let user in users) {
-            if (users[user].apps == "0") {
+            if (users[user].apps < 20) {
                 break
             } else if (user == 0) {
                 topReviewers.push(users[user])
