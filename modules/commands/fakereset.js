@@ -52,7 +52,7 @@ module.exports = {
                     toptext += `<:${user.section}Crest:608153804353044495>`
                     break;
             }
-            toptext += ` ${user.username} now has ${user.strikes} strikes\n`
+            toptext += ` ${user.username} now has ${user.strikes} strikes (${user.ap} AP, ${user.apps} apps)\n`
         };
 
         let bottomtext = ""

@@ -65,13 +65,13 @@ module.exports = {
                     toptext += `<:${user.section}Crest:608153804353044495>`
                     break;
             }
-            toptext += ` ${user.username} now has ${user.strikes} strikes`
+            toptext += ` ${user.username} now has ${user.strikes} strikes (${user.ap} AP, ${user.apps} apps)`
 
             const dbuser = csidatabase.users.find(u => u.username == user.username)
             if(dbuser.discordId != null) {
                 try {
                     const discordUser = await interaction.client.users.fetch(dbuser.discordId)
-                    discordUser.send({content: `You have been issued a quota strike on the MP OC database. You now have ${user.strikes} strikes. DM your sectional ASI or the officer manager if you have reason to have it revoked.`})
+                    discordUser.send({content: `You have been issued a quota strike on the MP OC database (${user.ap} AP, ${user.apps} apps). You now have ${user.strikes} strikes. DM your sectional ASI or the officer manager if you have reason to have it revoked.`})
                 } catch (_) {
                     toptext += " (failed to DM)"
                 }
